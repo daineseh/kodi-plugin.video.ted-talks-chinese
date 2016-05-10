@@ -103,7 +103,12 @@ class TedParser:
         talks = []
         for div_tag in self.soup.find_all('div', 'media media--sm-v'):
             tag_img = div_tag.find('img', ' thumb__image')
-            thumb = tag_img.get('src')
+            img = tag_img.get('src')
+            # Get higher pixel photo
+            width = int(img.split('=')[-1]) * 2
+            width_str = '=%d' % width
+            eq_num = img.rfind('=')
+            thumb = img[:eq_num] + width_str
 
             tag_h4 = div_tag.find('h4', 'h12 talk-link__speaker')
             speaker = tag_h4.string
