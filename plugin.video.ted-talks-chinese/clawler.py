@@ -3,9 +3,11 @@
 from bs4 import BeautifulSoup
 from collections import OrderedDict
 
+import os
 import re
 import requests
 import urlparse
+import xbmc
 
 
 BASE_URL = 'https://www.ted.com'
@@ -70,6 +72,7 @@ class TEDSub2SubRipWrapper:
         self.sub_obj = TEDSub2SubRip(req.json(), intro_time)
 
     def output(self):
+        sub_file = os.path.join(xbmc.translatePath("special://temp"), 'ted_talk_sub.srt')
         with open('ted_talk_sub.srt', 'w') as fp:
             fp.write(self.sub_obj.reads())
 

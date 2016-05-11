@@ -1,5 +1,7 @@
 #-*- coding: utf-8 -*-
+import os
 import sys
+import time
 import urllib
 import urlparse
 import xbmc
@@ -79,4 +81,12 @@ elif mode[0] == 'play':
             entries = ydl.extract_info(url).get('entries')
             resource_uri = entries[-1].get('url')
     xbmc.Player().play(resource_uri)
+
+    subs_file = os.path.join(xbmc.translatePath("special://temp"), 'ted_talk_sub.srt')
+    # Up to 30s to start
+    start_time = time.time()
+    while not xbmc.Player().isPlaying() and time.time() - start_time < 30:
+        time.sleep(1)
+    if xbmc.Player().isPlaying():
+        xbmc.Player().setSubtitles(subs_file)
 
