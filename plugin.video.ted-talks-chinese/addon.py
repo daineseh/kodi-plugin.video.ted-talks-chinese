@@ -9,7 +9,7 @@ import xbmcgui
 import xbmcplugin
 import youtube_dl
 
-from clawler import TedParser
+from clawler import TedParser, TEDSub2SubRipWrapper
 
 
 base_url = sys.argv[0]
@@ -82,11 +82,13 @@ elif mode[0] == 'play':
             resource_uri = entries[-1].get('url')
     xbmc.Player().play(resource_uri)
 
-    subs_file = os.path.join(xbmc.translatePath("special://temp"), 'ted_talk_sub.srt')
+    sub_file = os.path.join(xbmc.translatePath("special://temp"), 'ted_talk_sub.srt')
+    sub_obj = TEDSub2SubRipWrapper(url)
+    sub_obj.output(sub_file)
     # Up to 30s to start
     start_time = time.time()
     while not xbmc.Player().isPlaying() and time.time() - start_time < 30:
         time.sleep(1)
     if xbmc.Player().isPlaying():
-        xbmc.Player().setSubtitles(subs_file)
+        xbmc.Player().setSubtitles(sub_file)
 
