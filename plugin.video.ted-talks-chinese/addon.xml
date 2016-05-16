@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
-<addon id="plugin.video.ted-talks-chinese" name="中文 TED Talks" version="0.1.5" provider-name="Dainese">
+<addon id="plugin.video.ted-talks-chinese" name="中文 TED Talks" version="0.1.6" provider-name="Dainese">
   <requires>
     <import addon="xbmc.python" version="2.24.0"/>
     <import addon="script.module.beautifulsoup4" version="4.3.2"/>
@@ -10,7 +10,7 @@
   </extension>
   <extension point="xbmc.addon.metadata">
     <summary lang="zh">中文 TED Talks</summary>
-    <description lang="zh">[COLOR cyan]中文 TED Talks[/COLOR][CR]TED（指technology, entertainment, design在英語中的縮寫，即技術、娛樂、設計）是美國的一家私有非營利機構。[CR]TED誕生於1984年，其創辦人是里查德·沃曼。[CR]TED召集眾多科學、設計、文學、音樂等領域的傑出人物，分享他們關於技術、社會、人的思考和探索。[CR]TED希望傳達這樣一個的信息，即優秀的思想可以改變人們對這個世界的看法，使人們反思自己的行為。</description>
+    <description lang="zh">[COLOR cyan]中文 TED Talks[/COLOR][CR]TED（指technology, entertainment, design在英語中的縮寫，即技術、娛樂、設計）是美國的一家私有非營利機構。TED誕生於1984年，其創辦人是里查德·沃曼。[CR]TED召集眾多科學、設計、文學、音樂等領域的傑出人物，分享他們關於技術、社會、人的思考和探索。[CR]藉以希望傳達這樣一個的信息，即優秀的思想可以改變人們對這個世界的看法，使人們反思自己的行為。</description>
     <disclaimer lang="zh"></disclaimer>
     <language>Chinese</language>
     <platform>all</platform>
