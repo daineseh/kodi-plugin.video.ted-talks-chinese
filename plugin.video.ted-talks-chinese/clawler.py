@@ -13,6 +13,18 @@ import xbmc
 BASE_URL = 'https://www.ted.com'
 BUILD_URL = lambda x: urlparse.urljoin(BASE_URL, x).encode('utf8')
 
+SORT_TABLE = OrderedDict([('最新', 'newest'),
+                          ('最久', 'oldest'),
+                          ('最受歡迎', 'popular'),
+                          ('印象深刻', 'jaw-dropping'),
+                          ('有趣', 'funny'),
+                          ('說服力', 'persuasive'),
+                          ('勇氣', 'courageous'),
+                          ('聰明', 'ingenious'),
+                          ('吸引', 'fascinating'),
+                          ('鼓舞人心', 'inspiring'),
+                          ('美感', 'beautiful'),
+                          ('啟發性', 'informative')])
 
 class TEDSub2SubRip:
     def __init__(self, ted_subs, intro_time = 0):
