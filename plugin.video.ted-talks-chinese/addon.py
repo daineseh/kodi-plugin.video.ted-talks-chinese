@@ -21,9 +21,6 @@ xbmcplugin.setContent(addon_handle, 'movies')
 def build_url(query):
     return base_url + '?' + urllib.urlencode(query)
 
-def page_number(url):
-    return url.split('=')[-1].split('.')[0]
-
 mode = args.get('mode', None)
 
 if mode is None:
@@ -39,7 +36,7 @@ if mode is None:
     xbmcplugin.addDirectoryItem(handle=addon_handle, url=None, listitem=li, isFolder=False)
 
     url = build_url({'mode': 'page', 'folder_name': obj.next_page})
-    li = xbmcgui.ListItem("Next Page (%s)" % page_number(obj.next_page))
+    li = xbmcgui.ListItem("Next Page (%s)" % obj.page_number(obj.next_page))
     xbmcplugin.addDirectoryItem(handle=addon_handle, url=url, listitem=li, isFolder=True)
     xbmcplugin.endOfDirectory(addon_handle)
 
@@ -58,12 +55,12 @@ elif mode[0] == 'page':
         xbmcplugin.addDirectoryItem(handle=addon_handle, url=None, listitem=li, isFolder=False)
 
         url = build_url({'mode': 'page', 'folder_name': obj.next_page})
-        li = xbmcgui.ListItem("Next Page (%s)" % page_number(obj.next_page))
+        li = xbmcgui.ListItem("Next Page (%s)" % obj.page_number(obj.next_page))
         xbmcplugin.addDirectoryItem(handle=addon_handle, url=url, listitem=li, isFolder=True)
 
     if obj.last_page:
         url = build_url({'mode': 'page', 'folder_name': obj.last_page})
-        li = xbmcgui.ListItem("Last Page (%s)" % page_number(obj.last_page))
+        li = xbmcgui.ListItem("Last Page (%s)" % obj.page_number(obj.last_page))
         xbmcplugin.addDirectoryItem(handle=addon_handle, url=url, listitem=li, isFolder=True)
     xbmcplugin.endOfDirectory(addon_handle)
 

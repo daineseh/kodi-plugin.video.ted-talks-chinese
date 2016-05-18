@@ -176,6 +176,11 @@ class TedParser:
     def last_page(self, value):
         self.__last_page = value
 
+    @classmethod
+    def page_number(cls, url):
+        match = re.search("&page=(?P<id>\d+)", url)
+        return match.group('id') if match else ''
+
     def get_talks(self):
         talks = []
         for div_tag in self.soup.find_all('div', 'media media--sm-v'):
