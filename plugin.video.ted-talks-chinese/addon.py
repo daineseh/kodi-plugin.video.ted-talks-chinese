@@ -9,7 +9,7 @@ import xbmcgui
 import xbmcplugin
 import youtube_dl
 
-from clawler import TedParser, TEDSub2SubRipWrapper
+from clawler import TedParser, TEDSub2SubRipWrapper, SORT_TABLE
 
 
 base_url = sys.argv[0]
@@ -45,6 +45,10 @@ def show_page(obj):
 mode = args.get('mode', None)
 
 if mode is None:
+    url = build_url({'mode': 'sort_by'})
+    li = xbmcgui.ListItem("[COLOR yellow]依內容特色排序．．．[/COLOR]")
+    xbmcplugin.addDirectoryItem(handle=addon_handle, url=url, listitem=li, isFolder=True)
+
     obj = TedParser()
     show_page(obj)
 
@@ -77,4 +81,12 @@ elif mode[0] == 'play':
         time.sleep(1)
     if xbmc.Player().isPlaying():
         xbmc.Player().setSubtitles(sub_file)
+
+elif mode[0] == 'sort_by':
+    for item in SORT_TABLE:
+        link = 'https://www.ted.com/talks?language=zh-tw&sort=%s' % SORT_TABLE.get(item)
+        url = build_url({'mode': 'page', 'folder_name': link})
+        li = xbmcgui.ListItem(item)
+        xbmcplugin.addDirectoryItem(handle=addon_handle, url=url, listitem=li, isFolder=True)
+    xbmcplugin.endOfDirectory(addon_handle)
 
