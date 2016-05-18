@@ -21,29 +21,7 @@ xbmcplugin.setContent(addon_handle, 'movies')
 def build_url(query):
     return base_url + '?' + urllib.urlencode(query)
 
-mode = args.get('mode', None)
-
-if mode is None:
-    obj = TedParser()
-    for talk in obj.get_talks():
-        url = build_url({'mode': 'play', 'folder_name': talk.url})
-        li = xbmcgui.ListItem("%s - %s" % (talk.title, talk.speaker))
-        li.setArt({'thumb': talk.thumb, 'icon': talk.thumb, 'fanart': talk.thumb})
-        xbmcplugin.addDirectoryItem(handle=addon_handle, url=url,
-                                    listitem=li, isFolder=True)
-
-    li = xbmcgui.ListItem('')
-    xbmcplugin.addDirectoryItem(handle=addon_handle, url=None, listitem=li, isFolder=False)
-
-    url = build_url({'mode': 'page', 'folder_name': obj.next_page})
-    li = xbmcgui.ListItem("Next Page (%s)" % obj.page_number(obj.next_page))
-    xbmcplugin.addDirectoryItem(handle=addon_handle, url=url, listitem=li, isFolder=True)
-    xbmcplugin.endOfDirectory(addon_handle)
-
-elif mode[0] == 'page':
-    page_url = args['folder_name'][0]
-    obj = TedParser(page_url)
-
+def show_page(obj):
     for talk in obj.get_talks():
         url = build_url({'mode': 'play', 'folder_name': talk.url})
         li = xbmcgui.ListItem("%s - %s" % (talk.title, talk.speaker))
@@ -63,6 +41,17 @@ elif mode[0] == 'page':
         li = xbmcgui.ListItem("Last Page (%s)" % obj.page_number(obj.last_page))
         xbmcplugin.addDirectoryItem(handle=addon_handle, url=url, listitem=li, isFolder=True)
     xbmcplugin.endOfDirectory(addon_handle)
+
+mode = args.get('mode', None)
+
+if mode is None:
+    obj = TedParser()
+    show_page(obj)
+
+elif mode[0] == 'page':
+    page_url = args['folder_name'][0]
+    obj = TedParser(page_url)
+    show_page(obj)
 
 elif mode[0] == 'play':
     url = args['folder_name'][0]
