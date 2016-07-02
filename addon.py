@@ -49,8 +49,21 @@ if mode is None:
     li = xbmcgui.ListItem("[COLOR yellow]依內容特色排序．．．[/COLOR]")
     xbmcplugin.addDirectoryItem(handle=addon_handle, url=url, listitem=li, isFolder=True)
 
+    url = build_url({'mode': 'search'})
+    li = xbmcgui.ListItem("[COLOR yellow]搜尋．．．[/COLOR]")
+    xbmcplugin.addDirectoryItem(handle=addon_handle, url=url, listitem=li, isFolder=True)
+
     obj = TedParser()
     show_page(obj)
+
+elif mode[0] == 'search':
+    keyboard = xbmc.Keyboard('', '輸入講者名或關鍵字')
+    keyboard.doModal()
+    if keyboard.isConfirmed():
+        search_term = keyboard.getText()
+        link = 'https://www.ted.com/talks?language=zh-tw&sort=newest&q=%s' % '+'.join(search_term.split())
+        obj = TedParser(link)
+        show_page(obj)
 
 elif mode[0] == 'page':
     page_url = args['folder_name'][0]
