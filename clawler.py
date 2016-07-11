@@ -89,13 +89,6 @@ class TEDSub2SubRipWrapper:
 
 
 class Talk:
-    def __init__(self, speaker = None, title = None,
-                 url = None, thumb = None):
-        self.speaker = self._to_str_type(speaker)
-        self.title = self._to_str_type(title)
-        self.thumb = self._to_str_type(thumb)
-        self.url = self._to_str_type(url)
-
     def _to_str_type(self, value):
         if not value:
             return
@@ -104,12 +97,28 @@ class Talk:
         return value.encode('utf8')
 
     @property
+    def posted(self):
+        return self.__posted
+
+    @posted.setter
+    def posted(self, value):
+        self.__posted = self._to_str_type(value)
+
+    @property
     def speaker(self):
         return self.__speaker
 
     @speaker.setter
     def speaker(self, value):
-        self.__speaker = value
+        self.__speaker = self._to_str_type(value)
+
+    @property
+    def time(self):
+        return self.__time
+
+    @time.setter
+    def time(self, value):
+        self.__time = self._to_str_type(value)
 
     @property
     def title(self):
@@ -117,7 +126,7 @@ class Talk:
 
     @title.setter
     def title(self, value):
-        self.__title = value
+        self.__title = self._to_str_type(value)
 
     @property
     def thumb(self):
@@ -125,7 +134,7 @@ class Talk:
 
     @thumb.setter
     def thumb(self, value):
-        self.__thumb = value
+        self.__thumb = self._to_str_type(value)
 
     @property
     def url(self):
@@ -133,7 +142,7 @@ class Talk:
 
     @url.setter
     def url(self, value):
-        self.__url = value
+        self.__url = self._to_str_type(value)
 
 
 class TedParser:
@@ -195,13 +204,25 @@ class TedParser:
             tag_h4 = div_tag.find('h4', 'h12 talk-link__speaker')
             speaker = tag_h4.string
 
+            tag_span = div_tag.find('span', 'meta__val')
+            posted = tag_span.string.strip()
+
             for tag_a in div_tag.find_all('a'):
                 if not tag_a.string:
+                    tag_span = tag_a.find('span', 'thumb__duration')
+                    time = tag_span.string.strip()
                     continue
                 url = BUILD_URL(tag_a.get('href'))
                 title = tag_a.string.strip()
-            talks.append(Talk(speaker, title, url, thumb))
 
+            talk = Talk()
+            talk.speaker = speaker
+            talk.title = title
+            talk.time = time
+            talk.url = url
+            talk.thumb = thumb
+            talk.posted = posted
+            talks.append(talk)
         return talks
 
 

@@ -24,21 +24,18 @@ def build_url(query):
 def show_page(obj):
     for talk in obj.get_talks():
         url = build_url({'mode': 'play', 'folder_name': talk.url})
-        li = xbmcgui.ListItem("%s - %s" % (talk.title, talk.speaker))
+        li = xbmcgui.ListItem("%s - %s [COLOR=lime][%s][/COLOR][COLOR=cyan] Posted: %s[/COLOR]" % (talk.title, talk.speaker, talk.time, talk.posted))
         li.setArt({'thumb': talk.thumb, 'icon': talk.thumb, 'fanart': talk.thumb})
         xbmcplugin.addDirectoryItem(handle=addon_handle, url=url, listitem=li, isFolder=True)
 
     if obj.next_page:
-        li = xbmcgui.ListItem('')
-        xbmcplugin.addDirectoryItem(handle=addon_handle, url=None, listitem=li, isFolder=False)
-
         url = build_url({'mode': 'page', 'folder_name': obj.next_page})
-        li = xbmcgui.ListItem("Next Page (%s)" % obj.page_number(obj.next_page))
+        li = xbmcgui.ListItem("[COLOR=yellow]Next Page %s[/COLOR]" % obj.page_number(obj.next_page))
         xbmcplugin.addDirectoryItem(handle=addon_handle, url=url, listitem=li, isFolder=True)
 
     if obj.last_page:
         url = build_url({'mode': 'page', 'folder_name': obj.last_page})
-        li = xbmcgui.ListItem("Last Page (%s)" % obj.page_number(obj.last_page))
+        li = xbmcgui.ListItem("[COLOR=yellow]Last Page %s[/COLOR]" % obj.page_number(obj.last_page))
         xbmcplugin.addDirectoryItem(handle=addon_handle, url=url, listitem=li, isFolder=True)
     xbmcplugin.endOfDirectory(addon_handle)
 
