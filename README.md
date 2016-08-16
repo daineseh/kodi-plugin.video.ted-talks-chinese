@@ -1,5 +1,6 @@
 # Chinese subtitle of TED Talks video plugin for KODI
 #### [中文 TED Talks] 是 [KODI](https://kodi.tv/download/) 的外掛，提供有中文字幕的 TED Talks
+![alt tag](https://github.com/daineseh/kodi-plugin.video.ted-talks-chinese/raw/master/screen.gif)
 ---
 安裝
 ----
